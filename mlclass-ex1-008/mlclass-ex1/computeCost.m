@@ -13,7 +13,14 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
+% vectorized hypothesis function
+h = X*theta;
 
+% mean square error
+mse = sum((h-y).^2);
+
+% cost function
+J = (1/(2*m))*mse;
 
 
 
