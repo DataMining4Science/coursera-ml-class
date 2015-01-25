@@ -17,15 +17,23 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
+    % Vectorized hypothesis function (for all training data)
+    _h = X * theta;
 
+    % The delta of actual output of h(x) minus expected output (y)
+    _delta = _h-y;
 
+    % The partial derivative of the cost function. Note that the vectorized
+    % implementation requires us to flip (h(x)-y)*x, since we do elementwise
+    % multiplication of the whole matrix X by vector _delta in one shot.
+    derivative = (1/m) * sum(X .* _delta);
 
+    % Transpose theta and subtract the derivative with a step size determined
+    % by the learning rate alpha.
+    _theta = theta' - alpha * derivative;
 
-
-
-
-
-
+    % Make _theta a m*1 matrix and assign it to the original reference of theta.
+    theta = _theta';
 
     % ============================================================
 
