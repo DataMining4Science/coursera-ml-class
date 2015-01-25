@@ -78,6 +78,23 @@ X = [ones(m, 1) X];
 %
 % Hint: At prediction, make sure you do the same feature normalization.
 %
+_theta = zeros(3,1);
+_num_iters = 100;
+_alphas = [0.5 0.3 0.1 0.03];
+_colors = ['m' 'b' 'r' 'g'];
+for i=1:size(_alphas, 2),
+  [t, J] = gradientDescentMulti(X, y, _theta, _alphas(i), _num_iters);
+  plot(1:_num_iters, J, _colors(i), 'LineWidth', 2);
+  if i == 1,
+    hold on;
+    xlabel('Number of iterations');
+    ylabel('Cost J');
+  end
+end
+legend('0.5','0.3','0.1','0.03');
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+% ============================================================
 
 fprintf('Running gradient descent ...\n');
 
