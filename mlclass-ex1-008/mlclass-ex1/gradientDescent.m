@@ -34,8 +34,8 @@ for iter = 1:num_iters
     % The heart of the gradient descent algorithm, where alpha is the step size
     % towards the global optimum (minimum) and the derivative function determines
     % the steepest slope, which is the direction we head towards.
-    _theta_0 = theta(1) .- alpha * derivative(_ones);
-    _theta_1 = theta(2) .- alpha * derivative(_x);
+    _theta_0 = theta(1) - alpha * derivative(_ones);
+    _theta_1 = theta(2) - alpha * derivative(_x);
 
     theta = [_theta_0; _theta_1];
 
