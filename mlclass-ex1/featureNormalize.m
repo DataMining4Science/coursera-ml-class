@@ -26,15 +26,9 @@ sigma = zeros(1, size(X, 2));
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
 
-for i=1:size(X, 2),
-  mu(i) = mean(X(:,i));
-  X_norm(:,i) = X_norm(:,i) .- mu(i);
-end
-
-for i=1:size(X, 2),
-  sigma(i) = std(X(:,i));
-  X_norm(:,i) = X_norm(:,i) ./ sigma(i);
-end
+mu = mean(X)
+sigma = std(X)
+X_norm = (X - mu) ./ sigma
 
 % Debugging
 %X_norm
