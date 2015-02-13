@@ -12,9 +12,16 @@ function out = mapFeature(X1, X2)
 
 degree = 6;
 out = ones(size(X1(:,1)));
+
+% for logging
+iteration = 1
+log = @(iteration, i, j) fprintf('%d: X1.^(%d-%d).*(X2.^%d)\n',iteration,i,j,j);
+
 for i = 1:degree
     for j = 0:i
         out(:, end+1) = (X1.^(i-j)).*(X2.^j);
+        log(iteration,i,j);
+        iteration += 1;
     end
 end
 
