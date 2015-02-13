@@ -21,6 +21,10 @@ h = @(X) sigmoid(X*theta);
 
 J = (1/m)*sum(-y.*log(h(X))-(1.-y).*log(1.-h(X))) + (lambda/(2*m))*sum(theta(2:end,1).^2);
 
+grad(1) = (1/m)*sum((h(X).-y).*X(:,1));
+
+grad(2:end) = ((1/m)*sum((h(X).-y).*X(:,2:end)))' .+ (lambda/m)*theta(2:end);
+
 % =============================================================
 
 end
