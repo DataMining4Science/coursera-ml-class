@@ -39,6 +39,25 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
+
+X = [ones(m,1) X];
+
+a1 = X;
+
+z2 = a1 * Theta1';
+
+a2 = [ones(m,1) sigmoid(z2)];
+
+z3 = a2 * Theta2';
+
+a3 = sigmoid(z3);
+
+h = a3; % hypothesis h(X) as result of forward propagation
+
+y = toBinaryVectorMatrix(y, num_labels); % recodes y to a 5000 x 10 matrix (5000 binary vectors).
+
+J = (1/m)*sum(sum(-y.*log(h)-(1.-y).*log(1.-h)));
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -50,6 +69,8 @@ Theta2_grad = zeros(size(Theta2));
 %               binary vector of 1's and 0's to be used with the neural network
 %               cost function.
 %
+
+
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
@@ -61,24 +82,6 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 % -------------------------------------------------------------
 
