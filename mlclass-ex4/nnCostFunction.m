@@ -70,30 +70,29 @@ J = (1/m)*sum(sum(-y.*log(h)-(1.-y).*log(1.-h)));
 %               cost function.
 %
 
-delta3 = zeros(num_labels, 1);
-delta2 = zeros(size(Theta1,1));
+D1 = 0;
+D2 = 0;
 
 for t = 1:m
-  % step 1
+  % step 1 - perform feedforward pass
   a1 = X(t,:)'; % 401x1
-  z2 = Theta1*a1;
-  z2 = [ 1; z2 ]; % 26x1
-  a2 = sigmoid(z2); % 26x1
+  z2 = Theta1*a1; % 25x1
+  a2 = [1; sigmoid(z2)]; % 26x1
   z3 = Theta2*a2; % 10x1
   a3 = sigmoid(z3);
-  % step 2
+  % step 2 - compute delta of output layer
   delta3 = a3 - y(t,:)'; % 10x1; we already have logical arrays
-  % step 3
-  delta2 = (Theta2'*delta3).*sigmoidGradient(z2); % 26x1
+  % step 3 - compute delta of hidden layer
+  Theta_2_t = Theta2(:,2:end)'; % skip first column of bias -> 25x10
+  delta2 = (Theta_2_t*delta3).*sigmoidGradient(z2); % 25x1
   % step 4
-  delta2 = delta2(2:end); % 25x1
-  Theta2_grad = Theta2_grad + delta3 * a2'; % 10x26
-  Theta1_grad = Theta1_grad + delta2 * a1'; % 25x401
+  D2 = D2 + delta3 * a2'; % 10x26
+  D1 = D1 + delta2 * a1'; % 25x401
 end
 
 % step 5
-Theta2_grad = Theta2_grad .* (1/m);
-Theta1_grad = Theta1_grad .* (1/m);
+Theta2_grad = D2 .* (1/m);
+Theta1_grad = D1 .* (1/m);
 
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
