@@ -70,6 +70,30 @@ J = (1/m)*sum(sum(-y.*log(h)-(1.-y).*log(1.-h)));
 %               cost function.
 %
 
+delta3 = zeros(num_labels, 1);
+delta2 = zeros(size(Theta1,1));
+
+for t = 1:m
+  % step 1
+  a1 = X(t,:)'; % 1x401;  ones already added above
+  z2 = Theta1*a1; % 1x25
+  z2 = [ 1; z2 ];
+  a2 = sigmoid(z2);
+  z3 = Theta2*a2; % 1x10
+  a3 = sigmoid(z3);
+  % step 2
+  delta3 = a3 - y(t,:)'; % 1x10; we already have logical arrays
+  % step 3
+  delta2 = (Theta2'*delta3).*sigmoidGradient(z2);
+  % step 4
+  delta2 = delta2(2:end); % 10x26
+  Theta2_grad = Theta2_grad + delta3 * a2';
+  Theta1_grad = Theta1_grad + delta2 * a1';
+end
+
+% step 5
+Theta2_grad = Theta2_grad .* (1/m);
+Theta1_grad = Theta1_grad .* (1/m);
 
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
