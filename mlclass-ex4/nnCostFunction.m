@@ -58,6 +58,10 @@ y = toBinaryVectorMatrix(y, num_labels); % recodes y to a 5000 x 10 matrix (5000
 
 J = (1/m)*sum(sum(-y.*log(h)-(1.-y).*log(1.-h)));
 
+% Part 1.4 Regularized cost function
+
+J = J + (lambda/(2*m))*(sum(sum(Theta1(:,2:end).^2))+sum(sum(Theta2(:,2:end).^2)));
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -91,8 +95,8 @@ for t = 1:m
 end
 
 % step 5
-Theta2_grad = D2 .* (1/m);
-Theta1_grad = D1 .* (1/m);
+Theta2_grad = D2 .* (1/m); % 10x26
+Theta1_grad = D1 .* (1/m); % 25x401
 
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
@@ -106,7 +110,8 @@ Theta1_grad = D1 .* (1/m);
 %               and Theta2_grad from Part 2.
 %
 
-J = J + (lambda/(2*m))*(sum(sum(Theta1(:,2:end).^2))+sum(sum(Theta2(:,2:end).^2)));
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) .+ (lambda/m)*Theta2(:,2:end);
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) .+ (lambda/m)*Theta1(:,2:end);
 
 % -------------------------------------------------------------
 
