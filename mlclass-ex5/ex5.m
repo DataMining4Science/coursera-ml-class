@@ -218,3 +218,14 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+fprintf('\n\n3.4 Optional (ungraded) exercise: Computing test set error\n\n');
+bestLambda = 3;
+fprintf('Applying chosen lambda (%d) to training set.\n', bestLambda);
+[theta] = trainLinearReg(X_poly, y, bestLambda);
+fprintf('Got follwing theta  from training:\n');
+theta
+[Jtest, gradtest] = linearRegCostFunction(X_poly_test, ytest, theta, 0);
+fprintf('Test error: %f ', Jtest);
+fprintf('(should be close to 3.8599).\n');
+fprintf('HINT TO MY FUTURE SELF: do not apply regularization (lambda) on error/cost calculation!\n');
