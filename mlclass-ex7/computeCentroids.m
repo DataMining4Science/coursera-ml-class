@@ -26,12 +26,11 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+for i = 1:K
+  Xcentroid = idx == i;                       % Note that idx == i returns a logical vector where each x ∈ {0,1}
+  Ck = sum(Xcentroid);
+  centroids(i,:) = (1/Ck)*((Xcentroid)' * X); % Sum columns of X for each row assigned to centroid i and divide each sum by Ck. Returns 1 x n matrix.
+end
 
 % =============================================================
 
